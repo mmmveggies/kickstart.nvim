@@ -371,25 +371,18 @@ require('lazy').setup({
   },
 
   {
-    'ggandor/leap.nvim',
-    config = function()
-      vim.keymap.set('n', 's', '<Plug>(leap)')
-      -- Hide the (real) cursor when leaping, and restore it afterwards.
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'LeapEnter',
-        callback = function()
-          vim.cmd.hi('Cursor', 'blend=100')
-          vim.opt.guicursor:append { 'a:Cursor/lCursor' }
-        end,
-      })
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'LeapLeave',
-        callback = function()
-          vim.cmd.hi('Cursor', 'blend=0')
-          vim.opt.guicursor:remove { 'a:Cursor/lCursor' }
-        end,
-      })
-    end,
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    ---@type Flash.Config
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      -- { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      -- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
   },
 
   -- LSP Plugins
@@ -802,9 +795,9 @@ require('lazy').setup({
     commit = 'cc59f73',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
-      require('gitlinker').setup({
-       -- mappings = nil
-      })
+      require('gitlinker').setup {
+        -- mappings = nil
+      }
     end,
   },
 
